@@ -1,0 +1,36 @@
+﻿@page "/editgame"
+@page "/editgame/{id:int}"
+@inject IGameService GameService
+
+<h3>Create Game</h3>
+
+@* Built in form for editing *@
+<EditForm Model="game" OnSubmit="HandleSubmit" FormName="editGame">
+
+    <label>Name</label>
+    <InputText @bind-Value="game.Name">@game.Name</InputText>
+
+    <label>Release Date</label>
+    <InputDate @bind-Value="game.ReleaseDate">@game.ReleaseDate</InputDate>
+
+    <label>Rating</label>
+    <InputNumber @bind-Value="game.Rating" min="1" max="10">@game.Rating</InputNumber>
+
+    <label>Description</label>
+    <InputText @bind-Value="game.Description">@game.Description</InputText>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+    @code {
+    [Parameter]
+    public int? Id { get; set; }
+
+    [SupplyParameterFromForm]
+    Game game { get; set; } = new Game { Name = string.Empty, ReleaseDate = DateOnly.MinValue, Rating = -1 };
+
+    async Task HandleSubmit()
+    {
+        await GameService.AddGame(game);
+    }
+}

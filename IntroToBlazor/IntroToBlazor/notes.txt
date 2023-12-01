@@ -1,0 +1,10 @@
+Server side proj, client proj.
+Server side: Web API, server code. Client will never see this. Interacting with web sockets
+Client: runs on the client! code will be put in dll and client can inspect this. Interacting with WASM
+
+Wasm: a assembly running on a browser VM (properietary to the browser, FireFox: SpiderMonkey; Chrome: V8)
+
+Web sockets: stateful protocol that estabilishes a single connection for bidirection communication.
+
+Stream rendering always the application to feel faster and more reponsive. Instead of taking 5 seconds to load the page. The page loads instantly 
+and then the content that takes a while will come when its ready

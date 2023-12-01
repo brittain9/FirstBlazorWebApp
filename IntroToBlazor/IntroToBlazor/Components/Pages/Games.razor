@@ -1,0 +1,53 @@
+﻿@page "/games"
+
+@inject IGameService GameService
+@inject NavigationManager NavigationManager
+@attribute [StreamRendering]
+
+<PageTitle>Games</PageTitle>
+
+<h1>Games</h1>
+
+@if(games == null)
+{
+    <span>Loading...</span>
+}
+else if(games.Count == 0)
+{
+    <span>No games found.</span>
+}
+else
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Release Date</th>
+            <th>Rating</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var game in games)
+        {
+            <tr>
+                <td>@game.Name</td>
+                <td>@game.ReleaseDate</td>
+                <td>@game.Rating</td>
+                <td>@game.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+
+<CreateGameButton />
+
+@code {
+    List<Game>? games = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        games = await GameService.GetAllGames();
+    }
+}
